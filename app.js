@@ -7,10 +7,10 @@ const app = express();
 
 //Creamos la conexion con la BD
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'n0m3l0',
-    database: 'bd_peliculas'
+    host: 'bjkgzysnpw8azncp3hcd-mysql.services.clever-cloud.com',
+    user: 'uoihgkynrcnuyxbi',
+    password: 'C10GpCbCXIf1MFgazeWR',
+    database: 'bjkgzysnpw8azncp3hcd'
 });
 
 connection.connect(function(error){
@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 //Ruta Get
 app.get('/', (req, res) =>{
     //res.send('CRUD Peliculas');
-    let sql = "SELECT * FROM Pelicula";
+    let sql = "SELECT * FROM pelicula";
     let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
         res.render('index', {
@@ -58,7 +58,7 @@ app.post('/guardar', (req, res) => {
         idDirector: req.body.idDirector,
         sinopsis: req.body.sinopsis
     };
-    let sql = "INSERT INTO Pelicula SET ?";
+    let sql = "INSERT INTO pelicula SET ?";
     let query = connection.query(sql, datos,(err, results) =>{
         if(err) throw err;
         res.redirect('/');
@@ -68,7 +68,7 @@ app.post('/guardar', (req, res) => {
 //Editar
 app.get('/editar/:idPelicula', (req, res) => {
     const idPelicula = req.params.idPelicula;
-    let sql = `Select * from Pelicula where idPelicula = ${idPelicula}`;
+    let sql = `Select * from pelicula where idPelicula = ${idPelicula}`;
     let query = connection.query(sql, (err, result) => {
         if(err) throw err;
         res.render('editar_pelicula',{
@@ -81,7 +81,7 @@ app.get('/editar/:idPelicula', (req, res) => {
 app.post('/actualizar', (req, res) => {
     
     const peliculaId = req.body.idPelicula;
-    let sql = "UPDATE Pelicula SET titulo='"+req.body.titulo+"', imagen='"+req.body.imagen+"', idGenero="+req.body.idGenero+", fechaPelicula='"+req.body.fechaPelicula+"', duracion= '"+req.body.duracion+"', clasificacion='"+req.body.clasificacion+"', idDirector="+req.body.idDirector+", sinopsis='"+req.body.sinopsis+"' where idPelicula="+peliculaId;
+    let sql = "UPDATE pelicula SET titulo='"+req.body.titulo+"', imagen='"+req.body.imagen+"', idGenero="+req.body.idGenero+", fechaPelicula='"+req.body.fechaPelicula+"', duracion= '"+req.body.duracion+"', clasificacion='"+req.body.clasificacion+"', idDirector="+req.body.idDirector+", sinopsis='"+req.body.sinopsis+"' where idPelicula="+peliculaId;
     let query = connection.query(sql, (err, results) =>{
         if(err) throw err;
         res.redirect('/');
@@ -91,7 +91,7 @@ app.post('/actualizar', (req, res) => {
 //Borrar
 app.get('/eliminar/:idPelicula', (req, res) => {
     const idPelicula = req.params.idPelicula;
-    let sql = `DELETE from Pelicula where idPelicula = ${idPelicula}`;
+    let sql = `DELETE from pelicula where idPelicula = ${idPelicula}`;
     let query = connection.query(sql, (err, result) => {
         if(err) throw err;
         res.redirect('/');
@@ -102,7 +102,7 @@ app.get('/eliminar/:idPelicula', (req, res) => {
 //Ruta para ver actores
 app.get('/actores', (req, res) =>{
     
-    let sql = "SELECT * FROM Actor";
+    let sql = "SELECT * FROM actor";
     let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
         res.render('actor', {
@@ -129,7 +129,7 @@ app.post('/guardar-actor', (req, res) => {
         sexoActor: req.body.sexoActor,
         nacionalidadActor: req.body.nacionalidadActor
     };
-    let sql = "INSERT INTO Actor SET ?";
+    let sql = "INSERT INTO actor SET ?";
     let query = connection.query(sql, datos,(err, results) =>{
         if(err) throw err;
         res.redirect('/actores');
@@ -139,7 +139,7 @@ app.post('/guardar-actor', (req, res) => {
 //Editar
 app.get('/editar-actor/:idActor', (req, res) => {
     const idActor = req.params.idActor;
-    let sql = `Select * from Actor where idActor = ${idActor}`;
+    let sql = `Select * from actor where idActor = ${idActor}`;
     let query = connection.query(sql, (err, result) => {
         if(err) throw err;
         res.render('editar_actor',{
@@ -162,7 +162,7 @@ app.post('/actualizar-actor', (req, res) => {
 //Borrar
 app.get('/eliminar-actor/:idActor', (req, res) => {
     const idActor = req.params.idActor;
-    let sql = `DELETE from Actor where idActor = ${idActor}`;
+    let sql = `DELETE from actor where idActor = ${idActor}`;
     let query = connection.query(sql, (err, result) => {
         if(err) throw err;
         res.redirect('/actores');
@@ -173,7 +173,7 @@ app.get('/eliminar-actor/:idActor', (req, res) => {
 //Ruta para ver directores
 app.get('/directores', (req, res) =>{
     
-    let sql = "SELECT * FROM Director";
+    let sql = "SELECT * FROM director";
     let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
         res.render('director', {
@@ -200,7 +200,7 @@ app.post('/guardar-director', (req, res) => {
         sexoDirector: req.body.sexoDirector,
         nacionalidadDirector: req.body.nacionalidadDirector
     };
-    let sql = "INSERT INTO Director SET ?";
+    let sql = "INSERT INTO director SET ?";
     let query = connection.query(sql, datos,(err, results) =>{
         if(err) throw err;
         res.redirect('/directores');
@@ -210,7 +210,7 @@ app.post('/guardar-director', (req, res) => {
 //Editar
 app.get('/editar-director/:idDirector', (req, res) => {
     const idDirector = req.params.idDirector;
-    let sql = `Select * from Director where idDirector = ${idDirector}`;
+    let sql = `Select * from director where idDirector = ${idDirector}`;
     let query = connection.query(sql, (err, result) => {
         if(err) throw err;
         res.render('editar_director',{
@@ -233,7 +233,7 @@ app.post('/actualizar-director', (req, res) => {
 //Borrar
 app.get('/eliminar-director/:idDirector', (req, res) => {
     const idDirector = req.params.idDirector;
-    let sql = `DELETE from Director where idDirector = ${idDirector}`;
+    let sql = `DELETE from director where idDirector = ${idDirector}`;
     let query = connection.query(sql, (err, result) => {
         if(err) throw err;
         res.redirect('/directores');
@@ -244,7 +244,7 @@ app.get('/eliminar-director/:idDirector', (req, res) => {
 //Ruta para ver directores
 app.get('/generos', (req, res) =>{
     
-    let sql = "SELECT * FROM Genero";
+    let sql = "SELECT * FROM genero";
     let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
         res.render('genero', {
@@ -266,7 +266,7 @@ app.post('/guardar-genero', (req, res) => {
     let datos = {
         nombreGenero: req.body.nombreGenero
     };
-    let sql = "INSERT INTO Genero SET ?";
+    let sql = "INSERT INTO genero SET ?";
     let query = connection.query(sql, datos,(err, results) =>{
         if(err) throw err;
         res.redirect('/generos');
@@ -276,7 +276,7 @@ app.post('/guardar-genero', (req, res) => {
 //Editar
 app.get('/editar-genero/:idGenero', (req, res) => {
     const idGenero = req.params.idGenero;
-    let sql = `Select * from Genero where idGenero = ${idGenero}`;
+    let sql = `Select * from genero where idGenero = ${idGenero}`;
     let query = connection.query(sql, (err, result) => {
         if(err) throw err;
         res.render('editar_genero',{
@@ -299,7 +299,7 @@ app.post('/actualizar-genero', (req, res) => {
 //Borrar
 app.get('/eliminar-genero/:idGenero', (req, res) => {
     const idGenero = req.params.idGenero;
-    let sql = `DELETE from Genero where idGenero = ${idGenero}`;
+    let sql = `DELETE from genero where idGenero = ${idGenero}`;
     let query = connection.query(sql, (err, result) => {
         if(err) throw err;
         res.redirect('/generos');
@@ -310,7 +310,7 @@ app.get('/eliminar-genero/:idGenero', (req, res) => {
 //Ruta para ver directores
 app.get('/repartos', (req, res) =>{
     
-    let sql = "SELECT * FROM Relacion_pelicula_actor";
+    let sql = "SELECT * FROM relacion_pelicula_actor";
     let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
         res.render('reparto', {
@@ -334,7 +334,7 @@ app.post('/guardar-actor-pelicula', (req, res) => {
         idActor: req.body.idActor,
         descripcion: req.body.descripcion
     };
-    let sql = "INSERT INTO Relacion_pelicula_actor SET ?";
+    let sql = "INSERT INTO relacion_pelicula_actor SET ?";
     let query = connection.query(sql, datos,(err, results) =>{
         if(err) throw err;
         res.redirect('/repartos');
@@ -344,7 +344,7 @@ app.post('/guardar-actor-pelicula', (req, res) => {
 //Editar
 app.get('/editar-actor-pelicula/:idRelacion_pelicula_actor', (req, res) => {
     const idRelacion_pelicula_actor = req.params.idRelacion_pelicula_actor;
-    let sql = `Select * from Relacion_pelicula_actor where idRelacion_pelicula_actor = ${idRelacion_pelicula_actor}`;
+    let sql = `Select * from relacion_pelicula_actor where idRelacion_pelicula_actor = ${idRelacion_pelicula_actor}`;
     let query = connection.query(sql, (err, result) => {
         if(err) throw err;
         res.render('editar_actor_pelicula',{
@@ -357,7 +357,7 @@ app.get('/editar-actor-pelicula/:idRelacion_pelicula_actor', (req, res) => {
 app.post('/actualizar-actor-pelicula', (req, res) => {
     
     const repartoId = req.body.idRelacion_pelicula_actor;
-    let sql = "UPDATE Relacion_pelicula_actor SET idPelicula="+req.body.idPelicula+", idActor="+req.body.idActor+", descripcion='"+req.body.descripcion+"'  where idRelacion_pelicula_actor="+repartoId;
+    let sql = "UPDATE relacion_pelicula_actor SET idPelicula="+req.body.idPelicula+", idActor="+req.body.idActor+", descripcion='"+req.body.descripcion+"'  where idRelacion_pelicula_actor="+repartoId;
     let query = connection.query(sql, (err, results) =>{
         if(err) throw err;
         res.redirect('/repartos');
@@ -367,7 +367,7 @@ app.post('/actualizar-actor-pelicula', (req, res) => {
 //Borrar
 app.get('/eliminar-actor-pelicula/:idRelacion_pelicula_actor', (req, res) => {
     const relacion_pelicula_actorId = req.params.idRelacion_pelicula_actor;
-    let sql = `DELETE from Relacion_pelicula_actor where idRelacion_pelicula_actor = ${relacion_pelicula_actorId}`;
+    let sql = `DELETE from relacion_pelicula_actor where idRelacion_pelicula_actor = ${relacion_pelicula_actorId}`;
     let query = connection.query(sql, (err, result) => {
         if(err) throw err;
         res.redirect('/repartos');
@@ -379,7 +379,7 @@ app.get('/eliminar-actor-pelicula/:idRelacion_pelicula_actor', (req, res) => {
 //Consulta 1
 app.get('/peliculas-directores', (req, res) =>{
     
-    let sql = "Select p.titulo, p.imagen, p.sinopsis, d.nombreDirector, d.appatDirector, d.apmatDirector From Pelicula AS p INNER JOIN Director AS d ON p.idDirector=d.idDirector;";
+    let sql = "Select p.titulo, p.imagen, p.sinopsis, d.nombreDirector, d.appatDirector, d.apmatDirector From pelicula AS p INNER JOIN director AS d ON p.idDirector=d.idDirector;";
     let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
         res.render('pelicula_director', {
@@ -392,7 +392,7 @@ app.get('/peliculas-directores', (req, res) =>{
 //Consulta 2
 app.get('/peliculas-generos', (req, res) =>{
     
-    let sql = "Select p.titulo, p.imagen, p.sinopsis, g.nombreGenero From Pelicula AS p INNER JOIN Genero AS g ON p.idGenero=g.idGenero;";
+    let sql = "Select p.titulo, p.imagen, p.sinopsis, g.nombreGenero From pelicula AS p INNER JOIN genero AS g ON p.idGenero=g.idGenero;";
     let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
         res.render('pelicula_genero', {
@@ -405,7 +405,7 @@ app.get('/peliculas-generos', (req, res) =>{
 //Consulta 3
 app.get('/peliculas-actores', (req, res) =>{
     
-    let sql = "Select p.titulo AS Pelicula, a.nombreActor, a.appatActor, a.apmatActor, rel.descripcion From Pelicula AS p INNER JOIN Relacion_pelicula_actor AS rel ON p.idPelicula = rel.idPelicula INNER JOIN Actor AS a ON a.idActor = rel.idActor;";
+    let sql = "Select p.titulo AS Pelicula, a.nombreActor, a.appatActor, a.apmatActor, rel.descripcion From pelicula AS p INNER JOIN relacion_pelicula_actor AS rel ON p.idPelicula = rel.idPelicula INNER JOIN actor AS a ON a.idActor = rel.idActor;";
     let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
         res.render('pelicula_actor', {
@@ -418,7 +418,7 @@ app.get('/peliculas-actores', (req, res) =>{
 //Consulta 4
 app.get('/peliculas-generos-directores', (req, res) =>{
     
-    let sql = "Select p.titulo AS Pelicula, p.imagen, p.sinopsis, g.nombreGenero, d.nombreDirector, d.appatDirector, d.apmatDirector From Pelicula AS p INNER JOIN Director AS d ON p.idDirector=d.idDirector INNER JOIN Genero AS g ON p.idGenero = g.idGenero;";
+    let sql = "Select p.titulo AS Pelicula, p.imagen, p.sinopsis, g.nombreGenero, d.nombreDirector, d.appatDirector, d.apmatDirector From pelicula AS p INNER JOIN director AS d ON p.idDirector=d.idDirector INNER JOIN genero AS g ON p.idGenero = g.idGenero;";
     let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
         res.render('pelicula_genero_director', {
@@ -431,7 +431,7 @@ app.get('/peliculas-generos-directores', (req, res) =>{
 //Consulta 5
 app.get('/peliculas-actores-directores', (req, res) =>{
     
-    let sql = "Select p.titulo AS Pelicula, a.nombreActor, a.appatActor, a.apmatActor, rel.descripcion, d.nombreDirector, d.appatDirector, d.apmatDirector From Pelicula AS p INNER JOIN Relacion_pelicula_actor AS rel ON p.idPelicula = rel.idPelicula INNER JOIN Actor AS a ON a.idActor = rel.idActor INNER JOIN Director AS d ON p.idDirector=d.idDirector;";
+    let sql = "Select p.titulo AS Pelicula, a.nombreActor, a.appatActor, a.apmatActor, rel.descripcion, d.nombreDirector, d.appatDirector, d.apmatDirector From pelicula AS p INNER JOIN relacion_pelicula_actor AS rel ON p.idPelicula = rel.idPelicula INNER JOIN actor AS a ON a.idActor = rel.idActor INNER JOIN director AS d ON p.idDirector=d.idDirector;";
     let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
         res.render('pelicula_actor_director', {
