@@ -6,17 +6,36 @@ const path = require('path');
 const app = express();
 
 //Creamos la conexion con la BD
-const connection = mysql.createConnection({
+var db_config ={
     host: 'bjkgzysnpw8azncp3hcd-mysql.services.clever-cloud.com',
     user: 'uoihgkynrcnuyxbi',
     password: 'C10GpCbCXIf1MFgazeWR',
     database: 'bjkgzysnpw8azncp3hcd'
-});
+};
 
-connection.connect(function(error){
-    if(!!error)console.log(error);
-    else console.log('Base de Datos conectada');
-});
+var connection;
+function handleDisconnect() {
+    connection = mysql.createConnection(db_config); 
+                                                    
+  
+    connection.connect(function(err) {              
+      if(err) {                                     
+        console.log('error when connecting to db:', err);
+        setTimeout(handleDisconnect, 2000); 
+      }                                     
+    });                                     
+
+    connection.on('error', function(err) {
+      console.log('db error', err);
+      if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
+        handleDisconnect();                        
+      } else {                                      
+        throw err;                                  
+      }
+    });
+  }
+  
+  handleDisconnect();
 
 //Establecemos las vistas de archivos
 app.set('views', path.join(__dirname, 'views'));
@@ -443,8 +462,8 @@ app.get('/peliculas-actores-directores', (req, res) =>{
 
 
 //Servidor
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 8080, () => {
 
-    console.log('Servidor escuchando en el puerto 8080');
+    console.log('Ejecutando servidor');
 
 });
