@@ -443,7 +443,7 @@ app.get('/peliculas-actores-directores', (req, res) =>{
 
 
 //Servidor
-app.listen(process.env.PORT || 8080, () => {
+app.listen(process.env.PORT, () => {
 
     console.log('Servidor escuchando en el puerto 8080');
 
